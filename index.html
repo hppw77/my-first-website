@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>王小明 | 數位行銷企劃</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0F1E;
+      --bg2:       #111827;
+      --bg3:       #1E2A3A;
+      --accent:    #3B82F6;
+      --accent2:   #60A5FA;
+      --accent3:   #93C5FD;
+      --text:      #F1F5F9;
+      --text-muted:#94A3B8;
+      --border:    rgba(59,130,246,0.18);
+      --radius:    20px;
+      --glow:      0 0 40px rgba(59,130,246,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Bento Grid ── */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+
+    /* ── Card Base ── */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--glow);
+      border-color: rgba(59,130,246,0.4);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(59,130,246,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ── Section Label ── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    /* ═══════════════════════════════
+       HERO CARD  (col 1-8, row 1)
+    ═══════════════════════════════ */
+    .hero-card {
+      grid-column: 1 / 9;
+      grid-row: 1;
+      background: linear-gradient(135deg, #0D1B3E 0%, #1E3A5F 50%, #0A1628 100%);
+      border-color: rgba(59,130,246,0.3);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+    }
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-name {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff 0%, var(--accent3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.35);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent2);
+      margin: 0.75rem 0 1rem;
+      width: fit-content;
+      backdrop-filter: blur(8px);
+    }
+    .hero-title-badge::before { content: '✦'; font-size: 0.65rem; }
+
+    .hero-tagline {
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      color: var(--text-muted);
+      max-width: 420px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .hero-tagline strong {
+      color: var(--accent2);
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════════════
+       AVATAR CARD  (col 9-12, row 1)
+    ═══════════════════════════════ */
+    .avatar-card {
+      grid-column: 9 / 13;
+      grid-row: 1;
+      background: var(--bg3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+      min-height: 280px;
+    }
+    .avatar-img {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 24px rgba(59,130,246,0.4);
+    }
+    .avatar-status {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: #4ADE80;
+      font-weight: 500;
+    }
+    .avatar-status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #4ADE80;
+      animation: pulse-green 2s infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+      50% { box-shadow: 0 0 0 5px rgba(74,222,128,0); }
+    }
+    .avatar-name-text {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .avatar-role-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: -0.5rem;
+    }
+
+    /* ═══════════════════════════════
+       SKILLS SECTION HEADER  (row 2)
+    ═══════════════════════════════ */
+    .skills-header {
+      grid-column: 1 / 13;
+      padding: 0.5rem 0 0;
+      background: none;
+      border: none;
+    }
+    .skills-header:hover { transform: none; box-shadow: none; }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title .icon { font-size: 1.1rem; }
+
+    /* ═══════════════════════════════
+       SKILL CARDS  (row 3)
+    ═══════════════════════════════ */
+    .skill-card { grid-column: span 4; }
+
+    .skill-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .skill-icon-1 { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); }
+    .skill-icon-2 { background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3); }
+    .skill-icon-3 { background: rgba(20,184,166,0.15); border: 1px solid rgba(20,184,166,0.3); }
+
+    .skill-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .skill-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+    .skill-tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* ═══════════════════════════════
+       WORKS SECTION  (row 4-5)
+    ═══════════════════════════════ */
+    .works-header {
+      grid-column: 1 / 13;
+      background: none;
+      border: none;
+      padding: 0.5rem 0 0;
+    }
+    .works-header:hover { transform: none; box-shadow: none; }
+
+    .work-card {
+      grid-column: span 4;
+      cursor: pointer;
+      padding: 0;
+      overflow: hidden;
+    }
+    .work-card:hover .work-overlay { opacity: 1; }
+    .work-card:hover .work-thumb { transform: scale(1.05); }
+
+    .work-thumb-wrap {
+      width: 100%; height: 170px;
+      overflow: hidden;
+      border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+      position: relative;
+    }
+    .work-thumb {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,15,30,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(2px);
+    }
+    .work-overlay-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s;
+    }
+    .work-overlay-btn:hover { background: var(--accent2); }
+
+    .work-info { padding: 1.25rem; }
+    .work-category {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent2);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .work-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .work-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .work-result {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: #4ADE80;
+      font-weight: 600;
+      background: rgba(74,222,128,0.08);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      border: 1px solid rgba(74,222,128,0.2);
+    }
+    .work-result::before { content: '↑'; }
+
+    /* ═══════════════════════════════
+       STATS CARD  (col 1-4, row extra)
+    ═══════════════════════════════ */
+    .stats-card {
+      grid-column: 1 / 5;
+      background: linear-gradient(135deg, #0D1B3E, #172448);
+      border-color: rgba(59,130,246,0.25);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ═══════════════════════════════
+       CONTACT CARD  (col 5-12)
+    ═══════════════════════════════ */
+    .contact-card {
+      grid-column: 5 / 13;
+      background: linear-gradient(135deg, #0D1B3E 0%, #1a2850 100%);
+      border-color: rgba(59,130,246,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+    .contact-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .contact-title span {
+      background: linear-gradient(135deg, var(--accent2), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .contact-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .email-copy-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .email-display {
+      font-size: 0.9rem;
+      color: var(--accent2);
+      font-weight: 500;
+      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 10px;
+      padding: 0.55rem 1rem;
+      flex: 1;
+      min-width: 180px;
+      word-break: break-all;
+    }
+    .copy-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: #2563EB; }
+    .copy-btn:active { transform: scale(0.96); }
+    .copy-btn.copied { background: #16A34A; }
+
+    .social-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .social-link:hover {
+      border-color: rgba(59,130,246,0.5);
+      color: var(--accent2);
+      background: rgba(59,130,246,0.06);
+    }
+
+    /* ═══════════════════════════════
+       MODAL
+    ═══════════════════════════════ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,10,20,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal {
+      background: var(--bg2);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 24px;
+      max-width: 560px;
+      width: 100%;
+      overflow: hidden;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.3s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
+    }
+    .modal-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .modal-body { padding: 1.75rem; }
+    .modal-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent2);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+    .modal-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
+      color: var(--accent2);
+      font-weight: 500;
+    }
+    .modal-close {
+      position: sticky;
+      top: 1rem;
+      float: right;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 1rem 0;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.15); }
+    .modal-result-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .modal-stat {
+      flex: 1;
+      min-width: 100px;
+      background: rgba(59,130,246,0.06);
+      border: 1px solid rgba(59,130,246,0.15);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+    .modal-stat-num {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent2);
+    }
+    .modal-stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 900px) {
+      .hero-card    { grid-column: 1 / 13; }
+      .avatar-card  { grid-column: 1 / 13; min-height: auto; flex-direction: row; justify-content: flex-start; gap: 1.25rem; padding: 1.5rem; }
+      .avatar-img   { width: 72px; height: 72px; }
+      .skill-card   { grid-column: span 6; }
+      .work-card    { grid-column: span 6; }
+      .stats-card   { grid-column: 1 / 7; }
+      .contact-card { grid-column: 7 / 13; }
+    }
+    @media (max-width: 600px) {
+      .bento { gap: 0.75rem; }
+      .skill-card   { grid-column: 1 / 13; }
+      .work-card    { grid-column: 1 / 13; }
+      .stats-card   { grid-column: 1 / 13; }
+      .contact-card { grid-column: 1 / 13; }
+      .avatar-card  { flex-direction: column; align-items: flex-start; }
+      .hero-card    { padding: 1.75rem; }
+      .hero-name    { font-size: 2.2rem; }
+    }
+
+    /* ── Scroll-in animation ── */
+    .card {
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card:nth-child(1)  { animation-delay: 0.05s; }
+    .card:nth-child(2)  { animation-delay: 0.10s; }
+    .card:nth-child(3)  { animation-delay: 0.15s; }
+    .card:nth-child(4)  { animation-delay: 0.20s; }
+    .card:nth-child(5)  { animation-delay: 0.22s; }
+    .card:nth-child(6)  { animation-delay: 0.24s; }
+    .card:nth-child(7)  { animation-delay: 0.26s; }
+    .card:nth-child(8)  { animation-delay: 0.30s; }
+    .card:nth-child(9)  { animation-delay: 0.32s; }
+    .card:nth-child(10) { animation-delay: 0.34s; }
+    .card:nth-child(11) { animation-delay: 0.38s; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="bento">
+
+    <!-- ══ HERO ══ -->
+    <div class="card hero-card">
+      <div>
+        <div class="section-label">關於我</div>
+        <h1 class="hero-name">王小明</h1>
+        <div class="hero-title-badge">數位行銷企劃</div>
+        <p class="hero-tagline">
+          我相信每個品牌都有一個動人故事——<br/>
+          我的工作，就是用<strong>數據驅動創意</strong>，<br/>
+          讓你的品牌被世界看見✨
+        </p>
+      </div>
+      <div style="margin-top:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+        <span style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:0.3rem;">
+          📍 台北市，台灣
+        </span>
+        <span style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:0.3rem;">
+          🎓 政治大學廣告學系
+        </span>
+        <span style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:0.3rem;">
+          ☕ 用咖啡換靈感
+        </span>
+      </div>
+    </div>
+
+    <!-- ══ AVATAR ══ -->
+    <div class="card avatar-card">
+      <img
+        class="avatar-img"
+        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=220&h=220&fit=crop&crop=face"
+        alt="王小明頭像"
+        onerror="this.src='https://ui-avatars.com/api/?name=王小明&background=1E3A5F&color=60A5FA&size=220'"
+      />
+      <div class="avatar-name-text">王小明</div>
+      <div class="avatar-role-text">Digital Marketing Planner</div>
+      <div class="avatar-status">
+        <span class="avatar-status-dot"></span>
+        接受新合作機會
+      </div>
+    </div>
+
+    <!-- ══ SKILLS HEADER ══ -->
+    <div class="card skills-header">
+      <div class="section-title">
+        <span class="icon">⚡</span> 核心專長
+      </div>
+    </div>
+
+    <!-- ══ SKILL 1 ══ -->
+    <div class="card skill-card">
+      <div class="skill-icon skill-icon-1">📊</div>
+      <div class="section-label">Strategy</div>
+      <div class="skill-name">數位廣告策略</div>
+      <div class="skill-desc">
+        精通 Google Ads、Meta Ads 全平台操盤，以 A/B 測試與數據回饋持續優化 ROI，每季平均降低 CPA 20%。
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Google Ads</span>
+        <span class="skill-tag">Meta Ads</span>
+        <span class="skill-tag">SEM</span>
+        <span class="skill-tag">A/B Testing</span>
+      </div>
+    </div>
+
+    <!-- ══ SKILL 2 ══ -->
+    <div class="card skill-card">
+      <div class="skill-icon skill-icon-2">✍️</div>
+      <div class="section-label">Content</div>
+      <div class="skill-name">內容行銷規劃</div>
+      <div class="skill-desc">
+        從品牌故事到病毒式短影音腳本，建立完整的內容生態系，讓受眾自願分享，自然流量月均增長 35%。
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">品牌敘事</span>
+        <span class="skill-tag">短影音</span>
+        <span class="skill-tag">SEO</span>
+        <span class="skill-tag">社群經營</span>
+      </div>
+    </div>
+
+    <!-- ══ SKILL 3 ══ -->
+    <div class="card skill-card">
+      <div class="skill-icon skill-icon-3">🔍</div>
+      <div class="section-label">Analytics</div>
+      <div class="skill-name">數據洞察分析</div>
+      <div class="skill-desc">
+        熟練 GA4、Looker Studio、Power BI，將複雜數字轉化為清晰決策依據，協助客戶精準調整行銷方向。
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">GA4</span>
+        <span class="skill-tag">Looker Studio</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">CDP</span>
+      </div>
+    </div>
+
+    <!-- ══ WORKS HEADER ══ -->
+    <div class="card works-header">
+      <div class="section-title">
+        <span class="icon">🗂</span> 精選作品
+      </div>
+    </div>
+
+    <!-- ══ WORK 1 ══ -->
+    <div class="card work-card" onclick="openModal('work1')">
+      <div class="work-thumb-wrap">
+        <img
+          class="work-thumb"
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop"
+          alt="電商品牌年度行銷活動"
+          onerror="this.style.background='#1E2A3A'; this.style.height='100%';"
+        />
+        <div class="work-overlay">
+          <button class="work-overlay-btn">▶ 查看詳情</button>
+        </div>
+      </div>
+      <div class="work-info">
+        <div class="work-category">電商 · 整合行銷</div>
+        <div class="work-title">品牌年度行銷活動全案</div>
+        <div class="work-desc">從策略規劃到創意執行，帶領跨部門團隊完成年度最大規模行銷戰役。</div>
+        <div class="work-result">營收成長 142%</div>
+      </div>
+    </div>
+
+    <!-- ══ WORK 2 ══ -->
+    <div class="card work-card" onclick="openModal('work2')">
+      <div class="work-thumb-wrap">
+        <img
+          class="work-thumb"
+          src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=600&h=340&fit=crop"
+          alt="社群媒體品牌重塑"
+          onerror="this.style.background='#1E2A3A';"
+        />
+        <div class="work-overlay">
+          <button class="work-overlay-btn">▶ 查看詳情</button>
+        </div>
+      </div>
+      <div class="work-info">
+        <div class="work-category">社群媒體 · 品牌重塑</div>
+        <div class="work-title">新創品牌社群從 0 到 10 萬粉</div>
+        <div class="work-desc">設計完整的社群策略框架，六個月內帶領新創品牌突破十萬粉絲里程碑。</div>
+        <div class="work-result">粉絲增長 1200%</div>
+      </div>
+    </div>
+
+    <!-- ══ WORK 3 ══ -->
+    <div class="card work-card" onclick="openModal('work3')">
+      <div class="work-thumb-wrap">
+        <img
+          class="work-thumb"
+          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop"
+          alt="數據驅動廣告優化"
+          onerror="this.style.background='#1E2A3A';"
+        />
+        <div class="work-overlay">
+          <button class="work-overlay-btn">▶ 查看詳情</button>
+        </div>
+      </div>
+      <div class="work-info">
+        <div class="work-category">廣告投放 · 數據優化</div>
+        <div class="work-title">跨平台廣告效益翻倍計畫</div>
+        <div class="work-desc">運用機器學習自動化競價策略，結合創意輪替測試，大幅提升廣告投報率。</div>
+        <div class="work-result">ROAS 提升 230%</div>
+      </div>
+    </div>
+
+    <!-- ══ STATS ══ -->
+    <div class="card stats-card">
+      <div class="section-label">成績單</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">合作品牌</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5年</div>
+          <div class="stat-label">產業資歷</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3億</div>
+          <div class="stat-label">廣告預算管理</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">12</div>
+          <div class="stat-label">產業獎項</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ CONTACT ══ -->
+    <div class="card contact-card">
+      <div>
+        <div class="section-label">聯絡我</div>
+        <div class="contact-title">
+          有個好點子？<br/>
+          <span>讓我們一起讓它發光！</span> 🚀
+        </div>
+        <p class="contact-sub">
+          無論是品牌策略諮詢、廣告投放合作，或只是想聊聊數位行銷的未來趨勢——我的收件匣永遠為你敞開。
+        </p>
+      </div>
+      <div>
+        <div class="email-copy-row">
+          <div class="email-display">hello@example.com</div>
+          <button class="copy-btn" id="copyBtn" onclick="copyEmail()">
+            <span id="copyIcon">📋</span>
+            <span id="copyText">一鍵複製</span>
+          </button>
+        </div>
+        <div class="social-row" style="margin-top:0.9rem;">
+          <a href="#" class="social-link">🔗 LinkedIn</a>
+          <a href="#" class="social-link">📸 Instagram</a>
+          <a href="#" class="social-link">𝕏 Twitter/X</a>
+          <a href="#" class="social-link">📝 Blog</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /bento -->
+</div><!-- /container -->
+
+<footer class="footer">
+  © 2024 王小明 · 數位行銷企劃 · 以 ☕ 和 🎵 製作
+</footer>
+
+<!-- ══════════ MODALS ══════════ -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal(null, true)">✕</button>
+    <img class="modal-img" id="modal-img" src="" alt="" />
+    <div class="modal-body">
+      <div class="modal-category" id="modal-category"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div class="modal-result-row" id="modal-stats"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Modal Data ── */
+  const works = {
+    work1: {
+      img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=440&fit=crop',
+      category: '電商 · 整合行銷',
+      title: '品牌年度行銷活動全案',
+      desc: `擔任某知名電商平台年度慶典活動的行銷全案負責人，統籌 SEO、SEM、社群、Email、KOL 合作等多元渠道，制定一致的品牌溝通策略。\n\n深度分析消費者旅程數據，針對不同受眾分群設計個性化訊息，並導入即時看板監控各渠道表現，動態調整預算配置，最終締造品牌史上最高單日業績紀錄。`,
+      tags: ['整合行銷', 'KOL 合作', 'Email Marketing', '消費者旅程', '多渠道投放', 'GA4'],
+      stats: [
+        { num: '142%', label: '營收成長' },
+        { num: '3.2x', label: 'ROAS 提升' },
+        { num: '580萬', label: '活動觸及人數' },
+      ]
+    },
+    work2: {
+      img: 'https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&h=440&fit=crop',
+      category: '社群媒體 · 品牌重塑',
+      title: '新創品牌社群從 0 到 10 萬粉',
+      desc: `協助一個全新美妝新創品牌，在競爭激烈的市場中打造差異化的社群形象。從品牌調性、視覺識別系統到內容策略，全面重新定義其數位溝通方式。\n\n透過精準的受眾研究，找出核心粉絲輪廓，設計「教育→娛樂→轉換」三階段內容漏斗，並孵化品牌自有 KOC（關鍵意見消費者）社群，六個月達成十萬粉絲里程碑。`,
+      tags: ['Instagram 策略', 'TikTok 行銷', 'KOC 培育', '品牌視覺', '內容日曆', 'UGC'],
+      stats: [
+        { num: '10萬', label: '粉絲突破' },
+        { num: '8.4%', label: '平均互動率' },
+        { num: '6個月', label: '達成時程' },
+      ]
+    },
+    work3: {
+      img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=440&fit=crop',
+      category: '廣告投放 · 數據優化',
+      title: '跨平台廣告效益翻倍計畫',
+      desc: `針對一家 B2B SaaS 企業，重新設計其橫跨 Google、Meta、LinkedIn 三大平台的廣告架構。導入自動化競價策略與創意輪替機制，以機器學習取代人工猜測。\n\n建立完整的歸因模型，釐清各渠道在轉換路徑中的真實貢獻，重新分配預算至高效渠道，最終在相同預算下將 ROAS 從 1.2 拉升至 3.96，轉換成本下降超過六成。`,
+      tags: ['Google Ads', 'Meta Ads', 'LinkedIn Ads', '自動化競價', '多渠道歸因', 'CPA 優化'],
+      stats: [
+        { num: '230%', label: 'ROAS 提升' },
+        { num: '-62%', label: 'CPA 降低' },
+        { num: '3.96x', label: '最終廣告回報' },
+      ]
+    }
+  };
+
+  function openModal(id) {
+    const w = works[id];
+    if (!w) return;
+    document.getElementById('modal-img').src = w.img;
+    document.getElementById('modal-img').alt = w.title;
+    document.getElementById('modal-category').textContent = w.category;
+    document.getElementById('modal-title').textContent = w.title;
+    document.getElementById('modal-desc').innerHTML = w.desc.replace(/\n/g, '<br/>');
+    document.getElementById('modal-tags').innerHTML = w.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+    document.getElementById('modal-stats').innerHTML = w.stats.map(s =>
+      `<div class="modal-stat"><div class="modal-stat-num">${s.num}</div><div class="modal-stat-label">${s.label}</div></div>`
+    ).join('');
+    document.getElementById('modal-backdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e, force) {
+    if (force || (e && e.target === document.getElementById('modal-backdrop'))) {
+      document.getElementById('modal-backdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal(null, true);
+  });
+
+  /* ── Copy Email ── */
+  function copyEmail() {
+    const email = 'hello@example.com';
+    navigator.clipboard.writeText(email).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const icon = document.getElementById('copyIcon');
+      const text = document.getElementById('copyText');
+      btn.classList.add('copied');
+      icon.textContent = '✅';
+      text.textContent = '已複製！';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        icon.textContent = '📋';
+        text.textContent = '一鍵複製';
+      }, 2000);
+    }).catch(() => {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = email;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      document.getElementById('copyText').textContent = '已複製！';
+      setTimeout(() => document.getElementById('copyText').textContent = '一鍵複製', 2000);
+    });
+  }
+</script>
+</body>
+</html>
